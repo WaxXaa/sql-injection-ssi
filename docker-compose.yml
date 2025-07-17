@@ -17,7 +17,7 @@ services:
       context: ./backend
     restart: always
     ports:
-      - "3000:3000"
+      - "3000:3000" # Asigna el puerto 3000 del host al 3000 del contenedor
     env_file:
       - .env
     environment:
@@ -25,4 +25,20 @@ services:
     depends_on:
       - db
     networks:
-      - app-
+      - app-net
+
+  frontend:
+    build:
+      context: ./frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-net
+
+# Definición de la red a nivel global
+networks:
+  app-net:
+    driver: bridge
