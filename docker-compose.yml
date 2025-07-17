@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  db:
+    image: mariadb:10.11.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "123"
+      MYSQL_DATABASE: "banco_demo"
+    volumes:
+      - ./db/banca.sql:/docker-entrypoint-initdb.d/banca.sql
+    networks:
+      - app-net
+
+  backend:
+    build:
+      context: ./backend
+    restart: always
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      DB_HOST: db
+    depends_on:
+      - db
+    networks:
+      - app-

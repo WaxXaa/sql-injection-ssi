@@ -1,0 +1,6 @@
+FROM nginx:alpine
+
+# copy and serve static HTML
+COPY indext.html /usr/share/nginx/html/index.html
+
+EXPOSE 80
